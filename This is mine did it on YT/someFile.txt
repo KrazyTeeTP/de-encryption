@@ -1,0 +1,26 @@
+from cryptography.fernet import Fernet
+
+def write():
+	with open('key.KEY', 'wb') as f:
+		f.write(Fernet.generate_key())
+
+# generate key
+def load():
+	with open('key.KEY', 'rb') as f:
+		return f.read()
+
+
+def encrypt(filename, the_key):
+	fern = Fernet(the_key)
+
+	with open(filename, 'rb') as f:
+		read_data = f.read()
+
+	encrypted = fern.decrypt(read_data)
+
+	with open(filename, 'wb') as f:
+		f.write(encrypted)
+
+#write()
+key = load()
+encrypt('file.txt', key)
